@@ -6,6 +6,7 @@ from django.views import View
 
 from orders.forms import NewOrderForm
 
+import cid
 import logging
 import requests
 
@@ -30,7 +31,10 @@ class NewOrder(View):
         payload = {
             'order_number': order_number
         }
-        r = requests.post("http://warehouse:9000/api/orders/", data=payload)
+        headers = {
+            'X-Correlation-Id': cid.locals.get_cid()
+        }
+        r = requests.post("http://warehouse:9000/api/orders/", data=payload, headers=headers)
 
         # View context
         ctx = {

@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['localhost', '0.0.0.0']
 # Application definition
 
 INSTALLED_APPS = [
+    'cid.apps.CidAppConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'cid.middleware.CidMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -130,7 +132,7 @@ LOGGING = {
    'disable_existing_loggers': False,
    'formatters': {
        'verbose': {
-           'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+           'format': '[cid: %(cid)s] %(levelname)s %(asctime)s %(module)s %(message)s',
        },
    },
    'handlers': {
@@ -138,7 +140,13 @@ LOGGING = {
            'level': 'INFO',
            'class': 'logging.StreamHandler',
            'stream': sys.stdout,
-           'formatter': 'verbose'
+           'formatter': 'verbose',
+           'filters': ['correlation'],
+       },
+   },
+   'filters': {
+       'correlation': {
+           '()': 'cid.log.CidContextFilter'
        },
    },
    'loggers': {
@@ -148,4 +156,11 @@ LOGGING = {
            'propagate': True,
        },
    },
+    'root': {
+        'level': 'INFO',
+        'handlers': ['console'],
+        'filters': ['correlation'],
+    },
 }
+
+CID_GENERATE = True

@@ -1,3 +1,4 @@
 django
+django-cid
 django-crispy-forms
 requests
