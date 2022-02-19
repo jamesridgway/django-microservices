@@ -56,4 +56,4 @@ Store, sets a `X-Correlation-Id` header in the API request that is sent to Wareh
 
 As a result, we can see that `e078265e-3e49-424e-8139-619ad7072b38` is the correlation ID which is used to tie together the related log lines between the two systems:
 
-[ TODO - picture ]
+![image](https://user-images.githubusercontent.com/3121162/154802642-86713d2b-1c16-40a1-9a34-b20b108af83d.png)
